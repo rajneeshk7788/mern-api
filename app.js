@@ -1,40 +1,54 @@
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
 const express = require('express');
 const cors = require('cors');
 const app = express();
-const mongoose = require('mongoose');
-const loginRoute = require('./api/routes/login');
-const contactRoute = require('./api/routes/contact');
-const signupRoute = require('./api/routes/signup');
-const bodyParser = require('body-parser');
-
-const connectionString = process.env.CONNECTION_STRING;
-
-mongoose.connect(connectionString);
-
-
-mongoose.connection.on('error', err => {
-    console.log('connection faild');
-});
-
-mongoose.connection.on('connected', connected => {
-    console.log('connected with database.....');
-});
-
-
-app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
+app.use(require('./router/auth '));
 
-app.use('/login', loginRoute);
-app.use('/contact', contactRoute);
-app.use('/signup', signupRoute);
+dotenv.config({path:'./config.env'});
 
-app.use((req, res, next) => {
-    res.status(404).json({
-        Error: "Bad Request"
-    })
+const DB = process.env.DATABASE;
+const User = require('./model/userSchema')
+
+
+const PORT =process.env.PORT;
+
+
+mongoose.connect(DB
+    
+    ).then(()=>{
+    console.log(`connection Successful`);
+
+}).catch((err)=>console.log(`No Connection`));
+
+
+
+// middelware
+
+const middleware = (req, res, next) =>{
+    console.log(`hello my middleware`);
+    next();
+    
+}
+
+
+
+// app.get('/', (req, res)=>{
+//     res.send(`Hello world from the server`);
+// });
+
+app.get('/about', middleware, (req, res)=>{
+    res.send(`Hello world from the about`);
 });
 
+// app.get('/signup', (req, res)=>{
+//     res.send(`Hello world from the signup`);
+// });
 
+app.listen(PORT,()=>{
+    console.log(`server is running at port no. ${PORT}`);
+})
 
-module.exports = app;
+console.log('successfully');

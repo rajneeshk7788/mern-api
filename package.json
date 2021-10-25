@@ -1,23 +1,23 @@
 {
-  "name": "mern_api",
+  "name": "api-r",
   "version": "1.0.0",
   "description": "api",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "api"
+    "mern-api"
   ],
   "author": "rajneesh",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.1",
-    "body-parser": "^1.19.0",
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
     "express": "^4.17.1",
-    "mongoose": "^6.0.6",
-    "nodemon": "^2.0.12"
+    "mongoose": "^6.0.12",
+    "nodemon": "^2.0.14"
   }
 }
